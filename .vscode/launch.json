@@ -1,0 +1,16 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+       {
+            "type": "java",
+            "name": "DiscografiaApplication",
+            "request": "launch",
+            "mainClass": "org.iplacex.Discografia.DiscografiaApplication",
+            "projectName": "Discografia",
+            "vmArgs": "-Dspring.data.mongodb.uri=\"mongodb+srv://eva2_spring:C8UliYDyOvIYtATx@cluster-spring.iqwxbjx.mongodb.net/discografica-db?retryWrites=true&w=majority&appName=cluster-spring\" -Dspring.data.mongodb.database=discografica-db"
+        }
+    ]
+}
