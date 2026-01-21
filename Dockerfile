@@ -1,24 +1,20 @@
-# Stage 1
+#Stage 1
+FROM gradle:8.5-jdk21 AS build
 
-FROM gradle:jdk21 as builder 
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
 
-WORKDIR /app
 
-COPY ./build.gradle .
-COPY ./settings.gradle .
+RUN gradle build --no-daemon -x test
 
-COPY src ./src
+#Stage 2: Run
 
-RUN gradle build --no-daemon 
-
-# Stage 2
-
-FROM openjdk:21-jdk-slim
-
-WORKDIR /app
-
-COPY --from=builder /app/build/libs/*.jar Discografia-1.jar
+FROM eclipse-temurin:21-jdk-alpine
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "Discografia-1.jar"]
+RUN mkdir /app
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
