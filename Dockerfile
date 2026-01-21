@@ -1,25 +1,25 @@
-# Stage 1
+#Stage 1
 
-FROM gradle:jdk21 as builder 
-
-WORKDIR /app
-
-COPY ./build.gradle .
-COPY ./settings.gradle .
-
-COPY src ./src
-
-RUN gradle bootJar --no-daemon -x test -Dorg.gradle.jvmargs="-Xmx256m -Xms256m"
+FROM gradle:jdk17 AS build
 
 
-# Stage 2
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
 
-FROM eclipse-temurin:21-jdk-jammy
 
-WORKDIR /app
+RUN gradle build --no-daemon -x test
 
-COPY --from=builder /app/build/libs/*.jar Discografia-1.jar
+#Stage 2
+FROM openjdk:17-jdk-slim
 
-EXPOSE 443 
 
-CMD ["java", "-jar", "Discografia-1.jar"]
+EXPOSE 8080
+
+
+RUN mkdir /app
+
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/app.jar
+
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
