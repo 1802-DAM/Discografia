@@ -1,6 +1,6 @@
 #Stage 1
 
-FROM gradle:jdk17 AS build
+FROM gradle:jdk21 AS build
 
 
 COPY --chown=gradle:gradle . /home/gradle/src
@@ -10,7 +10,8 @@ WORKDIR /home/gradle/src
 RUN gradle build --no-daemon -x test
 
 #Stage 2
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:21-jdk-alpine
+
 
 
 EXPOSE 8080
