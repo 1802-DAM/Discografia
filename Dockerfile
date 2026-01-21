@@ -9,7 +9,8 @@ COPY ./settings.gradle .
 
 COPY src ./src
 
-RUN gradle build --no-daemon -x test
+RUN gradle bootJar --no-daemon -x test -Dorg.gradle.jvmargs="-Xmx256m -Xms256m"
+
 
 # Stage 2
 
