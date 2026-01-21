@@ -9,7 +9,7 @@ COPY ./settings.gradle .
 
 COPY src ./src
 
-RUN gradle build --o-daemon 
+RUN gradle build --no-daemon 
 
 # Stage 2
 
