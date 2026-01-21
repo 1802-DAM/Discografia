@@ -7,7 +7,7 @@ WORKDIR /home/gradle/src
 
 RUN gradle build --no-daemon -x test
 
-#Stage 2: Run
+#Stage 2
 
 FROM eclipse-temurin:21-jdk-alpine
 
